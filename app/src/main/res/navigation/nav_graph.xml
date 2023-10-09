@@ -4,24 +4,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/fragmentMenu">
-
+    app:startDestination="@id/menuFragment">
+<!--    <argument-->
+<!--        android:name="noteId"-->
+<!--        android:defaultValue="0L"-->
+<!--        app:argType="long" />-->
     <fragment
-        android:id="@+id/fragmentNote"
-        android:name="com.example.project6.NotesFragment"
-        android:label="input_fragment"
-        tools:layout="@layout/fragment_note" >
-        <action
-            android:id="@+id/note_to_menu"
-            app:destination="@+id/fragmentMenu"/>
-    </fragment>
-    <fragment
-        android:id="@+id/fragmentMenu"
+        android:id="@+id/menuFragment"
         android:name="com.example.project6.MenuFragment"
-        android:label="input_fragment"
+        android:label="fragment_menu"
         tools:layout="@layout/fragment_menu" >
         <action
             android:id="@+id/menu_to_note"
-            app:destination="@+id/fragmentNote"/>
+            app:destination="@id/noteFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/noteFragment"
+        android:name="com.example.project6.NotesFragment"
+        android:label="@string/title"
+        tools:layout="@layout/fragment_note">
+
+        <action
+            android:id="@+id/note_to_menu"
+            app:destination="@id/menuFragment"
+            app:popUpTo="@id/menuFragment"
+            app:popUpToInclusive="true" />
+
     </fragment>
 </navigation>
