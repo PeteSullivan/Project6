@@ -23,7 +23,7 @@ class NotesFragment : Fragment() {
         val view = binding.root
         val application = requireNotNull(this.activity).application
         val dao = NoteDatabase.getInstance(application).noteDao
-        val noteId = 0L
+        val noteId = 1L
 
         val viewModelFactory = NotesViewModelFactory(noteId, dao)
         val viewModel = ViewModelProvider(
@@ -41,7 +41,7 @@ class NotesFragment : Fragment() {
         })
 
         binding.saveButton.setOnClickListener {
-
+            viewModel.updateNote()
             view.findNavController().navigate(R.id.note_to_menu)
 
         }

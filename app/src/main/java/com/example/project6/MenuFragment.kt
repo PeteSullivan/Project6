@@ -46,6 +46,7 @@ class MenuFragment : Fragment() {
                 val action = MenuFragmentDirections
                     .menuToNote()
                 this.findNavController().navigate(action)
+                binding.curID = noteId
                 viewModel.onNoteNavigated()
             }
         })
