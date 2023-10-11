@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -41,19 +42,31 @@ class MenuFragment : Fragment() {
             }
         })
 
+        /*
+        ran into a bug where I couldn't use arguments to pass data between fragments. Tried to use
+        bundles to pass the noteId to NotesFragment, but it doesn't work atm. During testing, I could
+        add notes, update notes, and delete notes, but I could never locate which note to change bc
+        of the argument bug.
+         */
         viewModel.navigateToNote.observe(viewLifecycleOwner, Observer { noteId ->
             noteId?.let {
-                val action = MenuFragmentDirections
-                    .menuToNote()
-                this.findNavController().navigate(action)
-                binding.curID = noteId
+                val id = noteId ?: 0
+                val bundle = bundleOf("noteId" to id)
+                view.findNavController().navigate(R.id.menu_to_note, bundle)
                 viewModel.onNoteNavigated()
             }
         })
         binding.addNoteButton.setOnClickListener {
-            view.findNavController().navigate(R.id.menu_to_note)
+            viewModel.addNote()
+
+            val id = viewModel.notes.value
+            val bundle = bundleOf("noteId" to id)
+            view.findNavController().navigate(R.id.menu_to_note, bundle)
+
+            viewModel.onNoteNavigated()
         }
         return view
+
     }
     override fun onDestroyView() {
         super.onDestroyView()

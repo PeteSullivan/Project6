@@ -29,7 +29,7 @@
             <Button
                 android:layout_width="40sp"
                 android:layout_height="40sp"
-                android:text="X"
+                android:text="@string/x"
 
                 />
         </LinearLayout>

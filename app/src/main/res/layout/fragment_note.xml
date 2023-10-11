@@ -8,9 +8,6 @@
         <variable
             name="viewModel"
             type="com.example.project6.NotesViewModel" />
-        <variable
-            name="curId"
-            type="Long" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

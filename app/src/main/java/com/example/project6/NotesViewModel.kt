@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
 class NotesViewModel(noteId: Long, val dao: NoteDao) : ViewModel() {
+
     val note = dao.get(noteId)
     private val _navigateToList = MutableLiveData<Boolean>(false)
     val navigateToList: LiveData<Boolean>
@@ -28,4 +29,5 @@ class NotesViewModel(noteId: Long, val dao: NoteDao) : ViewModel() {
     fun onNavigatedToList() {
         _navigateToList.value = false
     }
+
 }

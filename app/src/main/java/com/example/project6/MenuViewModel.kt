@@ -9,12 +9,25 @@ import kotlinx.coroutines.launch
 
 class MenuViewModel(val dao: NoteDao) : ViewModel() {
 
+
     val notes = dao.getAll()
     private val _navigateToNote = MutableLiveData<Long?>()
     val navigateToNote: LiveData<Long?>
         get() = _navigateToNote
-
-
+    /*
+    adds a new note
+     */
+    fun addNote() {
+        viewModelScope.launch {
+            val note = Note()
+            note.noteTitle = "title"
+            note.noteDescription = "description"
+            dao.insert(note)
+        }
+    }
+    /*
+    controls when notes are clicked/navigated to
+     */
     fun onNoteClicked(noteId: Long) {
         _navigateToNote.value = noteId
     }

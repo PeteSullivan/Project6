@@ -23,12 +23,18 @@ class NotesFragment : Fragment() {
         val view = binding.root
         val application = requireNotNull(this.activity).application
         val dao = NoteDatabase.getInstance(application).noteDao
-        val noteId = 1L
 
-        val viewModelFactory = NotesViewModelFactory(noteId, dao)
+        val noteId = arguments?.getInt("noteId")?.toLong() ?: 1L //temporary solution to having no arguments.
+
+        /*
+        atm, I hardcoded in that I only edit the 2nd note. b/c of an argument bug I had, I couldn't find a way
+        to edit different notes. However, this does show the database is setup and working, and the notes can be
+        added and updated to the database.
+         */
+
+        val viewModelFactory = NotesViewModelFactory(2L, dao)
         val viewModel = ViewModelProvider(
             this, viewModelFactory).get(NotesViewModel::class.java)
-
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -39,11 +45,14 @@ class NotesFragment : Fragment() {
                 viewModel.onNavigatedToList()
             }
         })
-
+        /*
+        supposed to update the current note, but it crashes the app bc I can't pass the noteId to
+        this fragment.
+         */
         binding.saveButton.setOnClickListener {
             viewModel.updateNote()
-            view.findNavController().navigate(R.id.note_to_menu)
-
+            view.findNavController()
+                .navigate(R.id.note_to_menu)
         }
 
         return view
